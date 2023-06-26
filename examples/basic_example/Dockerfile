@@ -1,0 +1,7 @@
+# syntax=docker/dockerfile:1
+
+FROM "ubuntu:jammy-20230301"
+ARG SCRIPT_SOURCE="https://raw.githubusercontent.com/zaldanaraul/vagrantize-docker/main/vagrantize-docker.sh"
+ADD --chown=0 --chmod=0700 ${SCRIPT_SOURCE} vagrantize-docker.sh
+RUN ./vagrantize-docker.sh
+
