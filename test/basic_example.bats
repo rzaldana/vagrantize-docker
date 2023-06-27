@@ -43,7 +43,7 @@ teardown() {
   log_to_stdout "Running vagrant up"
 
   # run vagrant up
-  vagrant up | log_to_stdout
+  SCRIPT_SOURCE="vagrantize-docker.sh" vagrant up | log_to_stdout
 
   log_to_stdout "SSHing into container"
   run vagrant ssh --command "echo hello_world"
