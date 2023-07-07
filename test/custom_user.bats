@@ -21,7 +21,7 @@ setup() {
 	PATH="$DIR/..:$PATH"
 
 	# Set example dir
-  EXAMPLE_DIR="$DIR/../examples/basic_example"
+  EXAMPLE_DIR="$DIR/../examples/custom_user"
 }
 
 teardown() {
@@ -34,6 +34,7 @@ teardown() {
 }
 
 @test "can run vagrant up and ssh into container" {
+  local test_username="someuser"
 
   cd "$EXAMPLE_DIR"
 
@@ -43,11 +44,13 @@ teardown() {
   log_to_stdout "Running vagrant up"
 
   # run vagrant up
-  SCRIPT_SOURCE="vagrantize-docker.bash" vagrant up | log_to_stdout
+  export SCRIPT_SOURCE="vagrantize-docker.bash" 
+  export USERNAME="$test_username" 
+  vagrant up | log_to_stdout
 
   log_to_stdout "SSHing into container"
-  run vagrant ssh --command "echo hello_world"
+  run vagrant ssh --command 'whoami'
   assert_success
-  assert_output --partial "hello_world"
+  assert_output --partial "$test_username"
 }
 
